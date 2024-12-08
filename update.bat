@@ -1,6 +1,6 @@
 @echo off
 :: Set the URL of the file to download
-set "url=https://github.com/httpsankit/Sahaj/raw/refs/heads/main/VleHub.exe"
+set "url=https://github.com/httpsankit/vlehub/raw/refs/heads/main/VleHub.exe"
 :: Extract the file name from the URL
 for %%I in ("%url%") do set "filename=%%~nxI"
 :: Set the destination path to the current folder with the same file name
