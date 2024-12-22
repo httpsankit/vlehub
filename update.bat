@@ -1,28 +1,36 @@
 @echo off
-:: URLs of the files to download
-set "url1=https://github.com/httpsankit/vlehub/raw/refs/heads/main/VleHub.exe"
-set "url2=https://github.com/httpsankit/vlehub/raw/refs/heads/main/Newtonsoft.Json.dll"
-set "url3=https://github.com/httpsankit/vlehub/raw/refs/heads/main/Newtonsoft.Json.xml"
-set "url4=https://github.com/httpsankit/vlehub/raw/refs/heads/main/SeleniumExtras.WaitHelpers.dll"
+cd /d "%~dp0"
 
-:: Function to download a file
-:DownloadFile
-set "url=%~1"
-for %%I in ("%url%") do set "filename=%%~nxI"
-set "output=%~dp0%filename%"
-echo Downloading %filename%...
-powershell -Command "Start-BitsTransfer -Source '%url%' -Destination '%output%'"
-echo Download of %filename% complete!
-goto :EOF
+:: Create a temporary PowerShell script
+echo $urls = @(> download.ps1
+echo     "https://github.com/httpsankit/vlehub/raw/refs/heads/main/VleHub.exe",>> download.ps1
+echo     "https://github.com/httpsankit/vlehub/raw/refs/heads/main/Newtonsoft.Json.dll",>> download.ps1
+echo     "https://github.com/httpsankit/vlehub/raw/refs/heads/main/Newtonsoft.Json.xml",>> download.ps1
+echo     "https://github.com/httpsankit/vlehub/raw/refs/heads/main/SeleniumExtras.WaitHelpers.dll">> download.ps1
+echo )>> download.ps1
+echo foreach ($url in $urls) {>> download.ps1
+echo     $filename = Split-Path $url -Leaf>> download.ps1
+echo     Write-Host "Downloading $filename...">> download.ps1
+echo     try {>> download.ps1
+echo         Invoke-WebRequest -Uri $url -OutFile $filename>> download.ps1
+echo         Write-Host "Downloaded successfully: $filename">> download.ps1
+echo     } catch {>> download.ps1
+echo         Write-Host "Failed to download: $filename">> download.ps1
+echo         Write-Host $_.Exception.Message>> download.ps1
+echo     }>> download.ps1
+echo }>> download.ps1
 
-:: Download files
-call :DownloadFile "%url1%"
-call :DownloadFile "%url2%"
-call :DownloadFile "%url3%"
-call :DownloadFile "%url4%"
+:: Run the PowerShell script
+powershell -ExecutionPolicy Bypass -File download.ps1
 
-:: Run the downloaded exe file
-start "" "%~dp0VleHub.exe"
+:: Clean up
+del download.ps1
 
-:: Exit the script
-exit
+:: Check if VleHub.exe exists and run it
+if exist "VleHub.exe" (
+    start "" "VleHub.exe"
+    exit
+) else (
+    echo VleHub.exe was not downloaded successfully.
+    pause
+)
