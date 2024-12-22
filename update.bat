@@ -3,6 +3,7 @@
 set "url1=https://github.com/httpsankit/vlehub/raw/refs/heads/main/VleHub.exe"
 set "url2=https://github.com/httpsankit/vlehub/raw/refs/heads/main/Newtonsoft.Json.dll"
 set "url3=https://github.com/httpsankit/vlehub/raw/refs/heads/main/Newtonsoft.Json.xml"
+set "url4=https://github.com/httpsankit/vlehub/raw/refs/heads/main/SeleniumExtras.WaitHelpers.dll"
 
 :: Function to download a file
 :DownloadFile
@@ -18,6 +19,7 @@ goto :EOF
 call :DownloadFile "%url1%"
 call :DownloadFile "%url2%"
 call :DownloadFile "%url3%"
+call :DownloadFile "%url4%"
 
 :: Run the downloaded exe file
 start "" "%~dp0VleHub.exe"
