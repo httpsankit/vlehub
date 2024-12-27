@@ -6,6 +6,7 @@ echo $urls = @(> download.ps1
 echo     "https://github.com/httpsankit/vlehub/raw/refs/heads/main/VleHub.exe",>> download.ps1
 echo     "https://github.com/httpsankit/vlehub/raw/refs/heads/main/Newtonsoft.Json.dll",>> download.ps1
 echo     "https://github.com/httpsankit/vlehub/raw/refs/heads/main/Newtonsoft.Json.xml",>> download.ps1
+echo     "https://github.com/httpsankit/vlehub/raw/refs/heads/main/QRCoder.dll",>> download.ps1
 echo     "https://github.com/httpsankit/vlehub/raw/refs/heads/main/SeleniumExtras.WaitHelpers.dll">> download.ps1
 echo )>> download.ps1
 echo foreach ($url in $urls) {>> download.ps1
