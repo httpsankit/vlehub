@@ -1,21 +1,32 @@
 @echo off
-:: Set the URL of the file to download
-set "url=https://github.com/httpsankit/Sahaj/raw/refs/heads/main/VleHub.exe"
-:: Extract the file name from the URL
-for %%I in ("%url%") do set "filename=%%~nxI"
-:: Set the destination path to the current folder with the same file name
-set "output=%~dp0%filename%"
+:: -----------------------------------------
+:: URLs to download
+set "url1=https://github.com/httpsankit/Sahaj/raw/refs/heads/main/VleHub.exe"
+set "url2=https://raw.githubusercontent.com/httpsankit/Sahaj/refs/heads/main/sms.mp3"
+:: -----------------------------------------
 
-echo Downloading file...
+:: Extract file names from URLs
+for %%I in ("%url1%") do set "filename1=%%~nxI"
+for %%I in ("%url2%") do set "filename2=%%~nxI"
+
+:: Set destination paths (current folder)
+set "output1=%~dp0%filename1%"
+set "output2=%~dp0%filename2%"
+
+echo Downloading files...
 echo.
-:: Call PowerShell to download the file and show the progress without showing the URL
-powershell -Command "Start-BitsTransfer -Source '%url%' -Destination '%output%'"
+
+:: Download first file
+powershell -NoLogo -NoProfile -Command "Start-BitsTransfer -Source '%url1%' -Destination '%output1%'"
+
+:: Download second file
+powershell -NoLogo -NoProfile -Command "Start-BitsTransfer -Source '%url2%' -Destination '%output2%'"
 
 echo.
 echo Download complete!
 
-:: Run the downloaded file
-start "" "%output%"
+:: Run the exe
+start "" "%output1%"
 
-:: Exit the script and close the command prompt window
-exit
+:: Exit immediately (close batch window)
+exit /b
